@@ -1,0 +1,9 @@
+.claude/
+.vscode/
+.DS_Store
+
+build
+mx.scratch
+!.settings
+
+.clangd
