@@ -15,7 +15,7 @@
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="usagi_profile.xdd" fileCreator="" fileCreationDate="2020-11-23" fileCreationTime="20:00:00.0000000+09:00" fileModifiedBy="" fileModificationDate="2026-02-21" fileModificationTime="09:13:19.2234870+09:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="usagi_profile.xdd" fileCreator="" fileCreationDate="2020-11-23" fileCreationTime="20:00:00.0000000+09:00" fileModifiedBy="" fileModificationDate="2026-02-21" fileModificationTime="10:47:54.3383870+09:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <q1:DeviceIdentity>
         <q1:vendorName></q1:vendorName>
         <q1:vendorID></q1:vendorID>
@@ -486,7 +486,7 @@
 * bit 11-30: set to 0
 * bit 0-10: 11-bit CAN-ID</description>
             <UDINT />
-            <q1:defaultValue value="0x80+$NODEID" />
+            <q1:defaultValue value="$NODEID+0x80" />
             <q1:property name="CO_countLabel" value="EM_PROD" />
             <q1:property name="CO_storageGroup" value="PERSIST_COMM" />
           </q1:parameter>
@@ -816,12 +816,12 @@
           <q1:parameter uniqueID="UID_SUB_120001">
             <label lang="en">COB-ID client to server (rx)</label>
             <UDINT />
-            <q1:defaultValue value="0x600+$NODEID" />
+            <q1:defaultValue value="$NODEID+0x600" />
           </q1:parameter>
           <q1:parameter uniqueID="UID_SUB_120002">
             <label lang="en">COB-ID server to client (tx)</label>
             <UDINT />
-            <q1:defaultValue value="0x580+$NODEID" />
+            <q1:defaultValue value="$NODEID+0x580" />
           </q1:parameter>
           <q1:parameter uniqueID="UID_OBJ_1201">
             <description lang="en">* Sub-indexes 1 and 2:
@@ -1119,7 +1119,7 @@
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="usagi_profile.xdd" fileCreator="" fileCreationDate="2020-11-23" fileCreationTime="20:00:00.0000000+09:00" fileModificationDate="2026-02-21" fileModificationTime="09:13:19.2234870+09:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="usagi_profile.xdd" fileCreator="" fileCreationDate="2020-11-23" fileCreationTime="20:00:00.0000000+09:00" fileModificationDate="2026-02-21" fileModificationTime="10:47:54.3383870+09:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <ApplicationLayers>
         <q2:CANopenObjectList>
           <CANopenObject index="1000" name="Device type" objectType="7" PDOmapping="no" uniqueIDRef="UID_OBJ_1000" />
