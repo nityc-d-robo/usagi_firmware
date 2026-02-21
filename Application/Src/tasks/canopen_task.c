@@ -3,6 +3,7 @@
 #include "tim.h"
 #include "CO_app_STM32.h"
 #include "CANopen.h"
+#include "OD.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <stdio.h>
@@ -30,22 +31,12 @@ void canopen_task(void *argument)
     {
       hb_log_tick = now;
 
-      CO_t *co = canOpenNodeSTM32.canOpenStack;
-      CO_NMT_internalState_t state = CO_NMT_getInternalState(co->NMT);
-
-      /* FDCAN Protocol Status Register */
-      uint32_t psr = hfdcan1.Instance->PSR;
-      /* FDCAN Error Counter Register */
-      uint32_t ecr = hfdcan1.Instance->ECR;
-      uint8_t  tec = (ecr & FDCAN_ECR_TEC_Msk) >> FDCAN_ECR_TEC_Pos;
-      uint8_t  rec = (ecr & FDCAN_ECR_REC_Msk) >> FDCAN_ECR_REC_Pos;
-
-      printf("[CAN] NMT=%d TEC=%u REC=%u BusOff=%lu ErrPassive=%lu ErrWarn=%lu\r\n",
-             (int)state,
-             tec, rec,
-             (psr & FDCAN_PSR_BO) ? 1UL : 0UL,
-             (psr & FDCAN_PSR_EP) ? 1UL : 0UL,
-             (psr & FDCAN_PSR_EW) ? 1UL : 0UL);
+      printf("[SERVO] CH1=%u CH2=%u CH3=%u CH4=%u [MOTOR] spd=%d\r\n",
+             OD_RAM.x2000_servoPositions[0],
+             OD_RAM.x2000_servoPositions[1],
+             OD_RAM.x2000_servoPositions[2],
+             OD_RAM.x2000_servoPositions[3],
+             OD_RAM.x2001_motorSpeed);
     }
 
     vTaskDelay(pdMS_TO_TICKS(1));

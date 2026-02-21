@@ -77,7 +77,6 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_driver_STM32.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_app_STM32.c
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_storageBlank.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/OD.c
 )
 
 # Add include paths
