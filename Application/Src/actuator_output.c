@@ -8,8 +8,10 @@
 #include "main.h"
 #include <math.h>
 
-#define SERVO_NEUTRAL_US  1500
-#define SERVO_RANGE_US    1000
+#define SERVO_NEUTRAL_US  1500   /* center [us] */
+#define SERVO_MIN_US       900   /* lower limit [us] */
+#define SERVO_MAX_US      2100   /* upper limit [us] */
+#define SERVO_RANGE_US     600   /* half range: (2100 - 1500) = 600; setpoint ±1 → min/max */
 #define SERVO_PERIOD_TICKS 19999
 #define PUMP_DUTY_FIXED    400
 #define PUMP_PERIOD        999
@@ -17,8 +19,8 @@
 static uint32_t setpoint_to_servo_ticks(float setpoint)
 {
     float pulse_us = (float)SERVO_NEUTRAL_US + setpoint * (float)SERVO_RANGE_US;
-    if (pulse_us < 500.0f) pulse_us = 500.0f;
-    if (pulse_us > 2500.0f) pulse_us = 2500.0f;
+    if (pulse_us < (float)SERVO_MIN_US) pulse_us = (float)SERVO_MIN_US;
+    if (pulse_us > (float)SERVO_MAX_US) pulse_us = (float)SERVO_MAX_US;
     return (uint32_t)(pulse_us * (float)(SERVO_PERIOD_TICKS + 1) / 20000.0f);
 }
 

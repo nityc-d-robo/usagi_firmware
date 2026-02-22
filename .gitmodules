@@ -4,9 +4,6 @@
 [submodule "Drivers/libcanard"]
 	path = Drivers/libcanard
 	url = https://github.com/OpenCyphal/libcanard.git
-[submodule "Drivers/dsdl.c"]
-	path = Drivers/dsdl.c
-	url = https://github.com/OpenCyphal-Garage/dsdl.c
 [submodule "Drivers/public_regulated_data_types"]
 	path = Drivers/public_regulated_data_types
 	url = https://github.com/OpenCyphal/public_regulated_data_types.git
