@@ -1,6 +1,6 @@
 # Cyphal type generation using nunavut/pydsdl.
 #
-# Invokes nunavut twice (once per root namespace) and writes generated C headers into
+# Invokes nunavut twice (once per root namespace) and writes generated C++ headers into
 # ${CMAKE_CURRENT_BINARY_DIR}/dsdl_types/.  A stamp file tracks build freshness so
 # re-generation only happens when .dsdl sources change.
 #
@@ -43,19 +43,23 @@ add_custom_command(
     COMMAND "${CMAKE_COMMAND}" -E make_directory "${DSDL_TYPES_DIR}"
     # reg namespace (uavcan is a dependency lookup)
     COMMAND "${VENV_PYTHON}" -m nunavut
-            --target-language c
+            --experimental-languages
+            --target-language cpp
+            --language-standard c++17
             --outdir "${DSDL_TYPES_DIR}"
             --lookup-dir "${DSDL_ROOT}/uavcan"
             "${DSDL_ROOT}/reg"
     # uavcan namespace (reg is a dependency lookup)
     COMMAND "${VENV_PYTHON}" -m nunavut
-            --target-language c
+            --experimental-languages
+            --target-language cpp
+            --language-standard c++17
             --outdir "${DSDL_TYPES_DIR}"
             --lookup-dir "${DSDL_ROOT}/reg"
             "${DSDL_ROOT}/uavcan"
     COMMAND "${CMAKE_COMMAND}" -E touch "${DSDL_TYPES_STAMP}"
     DEPENDS ${_DSDL_SOURCES}
-    COMMENT "Generating Cyphal DSDL C types with nunavut"
+    COMMENT "Generating Cyphal DSDL C++ types with nunavut"
     VERBATIM
 )
 

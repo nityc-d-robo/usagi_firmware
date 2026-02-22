@@ -1,6 +1,6 @@
 /**
  * @file actuator_command.h
- * @brief Decode Cyphal transfers (Planar, Bit, Readiness) and maintain command state with timeout.
+ * @brief Planar/Bit/Readiness デコードとコマンド状態管理。タイムアウト処理付き。
  */
 
 #ifndef ACTUATOR_COMMAND_H
@@ -10,23 +10,15 @@
 extern "C" {
 #endif
 
-#include <stdbool.h>
 #include <stdint.h>
 
-struct CanardRxTransfer;
-struct CanardRxSubscription;
-
-/** Called when a full transfer is received. Dispatches by subject and updates internal state. */
-void actuator_command_on_transfer(const struct CanardRxTransfer* transfer,
-                                  const struct CanardRxSubscription* subscription);
-
-/** Apply current command state to PWM (call periodically from task). Handles CONTROL_TIMEOUT. */
-void actuator_command_apply(void);
-
-/** Initialize command state (call once). */
+/** コマンド状態を初期化し、RX サブスクリプションを CyphalTransport に登録する。 */
 void actuator_command_init(void);
 
-/** Read debug counters for validation / UART logging. */
+/** 現在のコマンド状態をアクチュエータに適用する。タスクループから周期的に呼ぶ。 */
+void actuator_command_apply(void);
+
+/** デコードエラー・タイムアウト回数を取得する。 */
 void actuator_command_get_stats(uint32_t* decode_errors, uint32_t* timeout_count);
 
 #ifdef __cplusplus
