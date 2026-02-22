@@ -67,12 +67,17 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
 )
 
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Debug>:-Og>
+)
+
 # Remove wrong libob.a library dependency when using cpp files
 list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 
-# Add linked libraries
+# Add linked libraries (m for dsdl.c math)
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
     freertos_kernel
     freertos_config
+    m
 )

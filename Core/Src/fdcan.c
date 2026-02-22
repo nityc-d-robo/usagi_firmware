@@ -60,6 +60,15 @@ void MX_FDCAN1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN FDCAN1_Init 2 */
+  /* Accept all extended IDs into RX FIFO0 (Cyphal uses extended IDs; libcanard filters by subject). */
+  /* Reject non-matching standard IDs and all remote frames. */
+  if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1,
+                                   FDCAN_REJECT,              /* NonMatchingStd */
+                                   FDCAN_ACCEPT_IN_RX_FIFO0,  /* NonMatchingExt */
+                                   FDCAN_REJECT_REMOTE,       /* RejectRemoteStd */
+                                   FDCAN_REJECT_REMOTE) != HAL_OK) {
+    Error_Handler();
+  }
   /* Enable TDC for CAN FD data phase at 5 Mbps */
   /* TdcOffset=25(=DataTimeSeg1 TQ), TdcFilter=0 */
   if (HAL_FDCAN_ConfigTxDelayCompensation(&hfdcan1, 25, 0) != HAL_OK) {

@@ -30,6 +30,8 @@
 #include "task.h"
 
 #include "led_blink_node.h"
+#include "cyphal_node.h"
+#include "actuator_command.h"
 
 /* USER CODE END Includes */
 
@@ -101,6 +103,10 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+  if (!cyphal_node_init()) {
+    Error_Handler();
+  }
+  actuator_command_init();
   /* USER CODE END 2 */
 
   /* Initialize leds */
@@ -120,6 +126,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   xTaskCreate(LEDBlinkTask, "LedBlink", configMINIMAL_STACK_SIZE*1, NULL, 1, NULL);
+  xTaskCreate(CyphalControlTask, "CyphalCtrl", configMINIMAL_STACK_SIZE*4, NULL, 2, NULL);
   vTaskStartScheduler();
 
   while (1)
