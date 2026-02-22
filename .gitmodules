@@ -1,6 +1,3 @@
 [submodule "Drivers/FreeRTOS-Kernel"]
 	path = Drivers/FreeRTOS-Kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
-[submodule "Drivers/CANopenSTM32"]
-	path = Drivers/CANopenSTM32
-	url = https://github.com/sarukiti/CANopenSTM32

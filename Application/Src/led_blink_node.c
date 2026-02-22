@@ -4,9 +4,9 @@
 #include "task.h"
 
 #include "main.h"
-#include "led_blink.h"
+#include "led_blink_node.h"
 
-void LEDBlink(void* pvParameters)
+void LEDBlinkTask(void* pvParameters)
 {
   while (1)
   {
