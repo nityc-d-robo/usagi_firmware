@@ -29,11 +29,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "led_blink.h"
-#include "servo_control.h"
-#include "canopen_task.h"
-#include "motor_control.h"
-#include "CO_app_STM32.h"
+#include "led_blink_node.h"
+#include "cyphal_node.h"
+#include "actuator_command.h"
 
 /* USER CODE END Includes */
 
@@ -105,6 +103,10 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
+  if (!cyphal_node_init()) {
+    Error_Handler();
+  }
+  actuator_command_init();
   /* USER CODE END 2 */
 
   /* Initialize leds */
@@ -123,10 +125,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  // xTaskCreate(LEDBlink,     "LEDBlink",     configMINIMAL_STACK_SIZE*2, NULL, 3, NULL);
-  xTaskCreate(canopen_task,  "CANopen",      configMINIMAL_STACK_SIZE*8, NULL, 3, NULL);
-  xTaskCreate(ServoControl,  "ServoCtrl",    configMINIMAL_STACK_SIZE*2, NULL, 2, NULL);
-  xTaskCreate(MotorControl,  "MotorCtrl",    configMINIMAL_STACK_SIZE*2, NULL, 2, NULL);
+  xTaskCreate(LEDBlinkTask, "LedBlink", configMINIMAL_STACK_SIZE*1, NULL, 1, NULL);
+  xTaskCreate(CyphalControlTask, "CyphalCtrl", configMINIMAL_STACK_SIZE*4, NULL, 2, NULL);
   vTaskStartScheduler();
 
   while (1)
@@ -213,9 +213,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-  if (htim->Instance == TIM17) {
-    canopen_app_interrupt();
-  }
+
   /* USER CODE END Callback 1 */
 }
 /* USER CODE BEGIN Header */

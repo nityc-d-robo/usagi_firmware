@@ -28,8 +28,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 project(${CMAKE_PROJECT_NAME})
 message("Build type: " ${CMAKE_BUILD_TYPE})
 
-# Enable CMake support for ASM and C languages
-enable_language(C ASM)
+# Enable CMake support for ASM, C, and C++ languages
+enable_language(C CXX ASM)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_compile_options(
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
+)
 
 # Create an executable object type
 add_executable(${CMAKE_PROJECT_NAME})
@@ -57,33 +64,10 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 add_subdirectory(Application)
 
 # Add sources to executable
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # CANopenNode core
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/CANopen.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_ODinterface.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_NMT_Heartbeat.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_HBconsumer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_Emergency.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_SDOserver.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_SDOclient.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_SYNC.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_PDO.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_TIME.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/CO_fifo.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/301/crc16-ccitt.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/303/CO_LEDs.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode/305/CO_LSSslave.c
-    # CANopenNode STM32 port
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_driver_STM32.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_app_STM32.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32/CO_storageBlank.c
-)
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE)
 
 # Add include paths
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode
-    ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/CANopenSTM32/CANopenNode_STM32
-)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE)
 
 # Add project symbols (macros)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
@@ -98,6 +82,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
     freertos_kernel
     freertos_config
-
-    # Add user defined libraries
 )

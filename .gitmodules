@@ -1,6 +1,9 @@
 [submodule "Drivers/FreeRTOS-Kernel"]
 	path = Drivers/FreeRTOS-Kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
-[submodule "Drivers/CANopenSTM32"]
-	path = Drivers/CANopenSTM32
-	url = https://github.com/sarukiti/CANopenSTM32
+[submodule "Drivers/libcanard"]
+	path = Drivers/libcanard
+	url = https://github.com/OpenCyphal/libcanard.git
+[submodule "Drivers/public_regulated_data_types"]
+	path = Drivers/public_regulated_data_types
+	url = https://github.com/OpenCyphal/public_regulated_data_types.git
